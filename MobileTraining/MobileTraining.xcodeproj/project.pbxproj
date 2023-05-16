@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D8FAD772A111213006D635E /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8FAD762A111213006D635E /* LoginView.swift */; };
+		1D8FAD792A11122F006D635E /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8FAD782A11122F006D635E /* LoginViewModel.swift */; };
+		1D8FAD7C2A1112EB006D635E /* NavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8FAD7B2A1112EB006D635E /* NavigationView.swift */; };
+		1D8FAD7F2A1113D5006D635E /* ProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8FAD7E2A1113D5006D635E /* ProductView.swift */; };
 		1DBF3F802A09406A007FB831 /* MobileTrainingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF3F7F2A09406A007FB831 /* MobileTrainingApp.swift */; };
 		1DBF3F822A09406A007FB831 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF3F812A09406A007FB831 /* ContentView.swift */; };
 		1DBF3F842A09406B007FB831 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1DBF3F832A09406B007FB831 /* Assets.xcassets */; };
@@ -14,6 +18,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1D8FAD762A111213006D635E /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		1D8FAD782A11122F006D635E /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		1D8FAD7B2A1112EB006D635E /* NavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationView.swift; sourceTree = "<group>"; };
+		1D8FAD7E2A1113D5006D635E /* ProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductView.swift; sourceTree = "<group>"; };
 		1DBF3F7C2A09406A007FB831 /* MobileTraining.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MobileTraining.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DBF3F7F2A09406A007FB831 /* MobileTrainingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileTrainingApp.swift; sourceTree = "<group>"; };
 		1DBF3F812A09406A007FB831 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -32,6 +40,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D8FAD742A1111D0006D635E /* components */ = {
+			isa = PBXGroup;
+			children = (
+				1D8FAD7D2A1113C1006D635E /* Product */,
+				1D8FAD7A2A1112CE006D635E /* Navigation */,
+				1D8FAD752A1111DF006D635E /* Login */,
+			);
+			path = components;
+			sourceTree = "<group>";
+		};
+		1D8FAD752A1111DF006D635E /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				1D8FAD762A111213006D635E /* LoginView.swift */,
+				1D8FAD782A11122F006D635E /* LoginViewModel.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		1D8FAD7A2A1112CE006D635E /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				1D8FAD7B2A1112EB006D635E /* NavigationView.swift */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
+		1D8FAD7D2A1113C1006D635E /* Product */ = {
+			isa = PBXGroup;
+			children = (
+				1D8FAD7E2A1113D5006D635E /* ProductView.swift */,
+			);
+			path = Product;
+			sourceTree = "<group>";
+		};
 		1DBF3F732A09406A007FB831 = {
 			isa = PBXGroup;
 			children = (
@@ -51,6 +94,7 @@
 		1DBF3F7E2A09406A007FB831 /* MobileTraining */ = {
 			isa = PBXGroup;
 			children = (
+				1D8FAD742A1111D0006D635E /* components */,
 				1DBF3F7F2A09406A007FB831 /* MobileTrainingApp.swift */,
 				1DBF3F812A09406A007FB831 /* ContentView.swift */,
 				1DBF3F832A09406B007FB831 /* Assets.xcassets */,
@@ -137,7 +181,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D8FAD792A11122F006D635E /* LoginViewModel.swift in Sources */,
+				1D8FAD772A111213006D635E /* LoginView.swift in Sources */,
+				1D8FAD7C2A1112EB006D635E /* NavigationView.swift in Sources */,
 				1DBF3F822A09406A007FB831 /* ContentView.swift in Sources */,
+				1D8FAD7F2A1113D5006D635E /* ProductView.swift in Sources */,
 				1DBF3F802A09406A007FB831 /* MobileTrainingApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
