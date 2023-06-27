@@ -9,9 +9,14 @@ import SwiftUI
 
 struct LoginView: View {
     @Binding var isLoggedIn: Bool
-    @ObservedObject var loginViewModel = LoginViewModel()
+    @ObservedObject var loginViewModel: LoginViewModel
     @State private var showingAlert = false
     @State private var isSecure = true
+    
+    init(isLoggedIn: Binding<Bool>, loginRepository: LoginRepository) {
+        self._isLoggedIn = isLoggedIn
+        self.loginViewModel = LoginViewModel(loginRepository: loginRepository)
+    }
     
     var body: some View {
         VStack {
@@ -67,10 +72,12 @@ struct PasswordField: View {
             if isSecure {
                 SecureField("Password", text: $password)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .textInputAutocapitalization(.never)
                     .padding()
             } else {
                 TextField("Password", text: $password)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .textInputAutocapitalization(.never)
                     .padding()
             }
             Button(action: {
@@ -87,6 +94,7 @@ struct PasswordField: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(isLoggedIn: .constant(false))
+        let loginRepository = LoginRepository()
+        return LoginView(isLoggedIn: .constant(false), loginRepository: loginRepository)
     }
 }

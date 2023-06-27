@@ -8,18 +8,28 @@
 import Foundation
 
 class LoginViewModel: ObservableObject {
-    let exampleEmail = "example@email.com"
-    let examplePassword = "123"
+    private let loginRepository: LoginRepository
     
     @Published var email = ""
     @Published var password = ""
     @Published var isEmailValid = true
+    @Published var login: Login
+    
+    init(loginRepository: LoginRepository) {
+        self.login = Login(jwt: "", user: User(id: 0, username: "", email: "", provider: "", confirmed: false, blocked: false))
+        self.loginRepository = loginRepository
+    }
     
     func login(success: @escaping (Bool) -> Void) {
-        if (self.email == self.exampleEmail && self.password == self.examplePassword) {
-            success(true)
+        Task {
+            do {
+                self.login = try await loginRepository.fetchLogin(identifier: self.email, password: self.password)
+                success(true)
+            } catch {
+                print("Login Error: \(error)")
+                success(false)
+            }
         }
-        success(false)
     }
     
     func validateEmail() -> Bool {
