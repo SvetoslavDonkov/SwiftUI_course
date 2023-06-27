@@ -14,6 +14,7 @@ class LoginViewModel: ObservableObject {
     @Published var password = ""
     @Published var isEmailValid = true
     @Published var login: Login
+    @Published var isLoginRequestRunning = false
     
     init(loginRepository: LoginRepository) {
         self.login = Login(jwt: "", user: User(id: 0, username: "", email: "", provider: "", confirmed: false, blocked: false))
@@ -21,7 +22,10 @@ class LoginViewModel: ObservableObject {
     }
     
     func login(success: @escaping (Bool, Login?) -> Void) {
+        isLoginRequestRunning = true
         Task {
+            /// Delay request by a couple of seconds in order to test disabled button
+            /// try await Task.sleep(nanoseconds: 10 * 1_000_000_000)
             do {
                 self.login = try await loginRepository.fetchLogin(identifier: self.email, password: self.password)
                 success(true, login)
@@ -29,6 +33,7 @@ class LoginViewModel: ObservableObject {
                 print("Login Error: \(error)")
                 success(false, nil)
             }
+            isLoginRequestRunning = false
         }
     }
     

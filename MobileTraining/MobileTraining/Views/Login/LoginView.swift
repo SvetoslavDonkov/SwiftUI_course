@@ -56,6 +56,7 @@ struct LoginView: View {
                     }
                 }
             }
+            .disabled(loginViewModel.isLoginRequestRunning)
             .padding()
         }
         .alert(isPresented: $showingAlert) {
