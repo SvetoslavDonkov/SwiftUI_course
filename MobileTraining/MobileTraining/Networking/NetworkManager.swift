@@ -7,10 +7,11 @@
 
 import Foundation
 import Alamofire
+import KeychainAccess
 
 class NetworkManager {
     private let session: Session
-    private let interceptor = Interceptor()
+    let interceptor = Interceptor()
     
     init() {
         // Create custom session configuration
@@ -37,16 +38,12 @@ class NetworkManager {
     }
 }
 
-protocol AccessTokenStorage: AnyObject {
-    typealias JWT = String
-    var jwt: JWT { get set }
-}
-
-final class Interceptor: RequestInterceptor {
-    let accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjg3MDg4NTkwLCJleHAiOjE2ODk2ODA1OTB9.yo1PdRHd-7Q9p0jZw0JkBS7t_mUGTsnKh5fuxOvxy_0"
+struct Interceptor: RequestInterceptor {
+    private let keychain = Keychain(service: "com.accedia.svdo.MobileTraining.keychain")
+    private let accessTokenKey = "access_token"
     
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
-        guard urlRequest.url?.absoluteString.hasPrefix("https://ethereal-artefacts.fly.dev/api/auth/local") == false else {
+        guard let accessToken = keychain[accessTokenKey] else {
             return completion(.success(urlRequest))
         }
         
@@ -54,5 +51,13 @@ final class Interceptor: RequestInterceptor {
         urlRequest.headers.add(.authorization(bearerToken: accessToken))
         
         completion(.success(urlRequest))
+    }
+    
+    func storeAccessToken(_ accessToken: String?) {
+        if let accessToken = accessToken {
+            keychain[accessTokenKey] = accessToken
+        } else {
+            keychain[accessTokenKey] = nil
+        }
     }
 }

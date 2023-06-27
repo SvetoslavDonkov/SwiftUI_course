@@ -13,9 +13,16 @@ struct LoginView: View {
     @State private var showingAlert = false
     @State private var isSecure = true
     
-    init(isLoggedIn: Binding<Bool>, loginRepository: LoginRepository) {
+    private let networkManager: NetworkManager
+    
+    init(isLoggedIn: Binding<Bool>, loginRepository: LoginRepository,
+         networkManager: NetworkManager) {
         self._isLoggedIn = isLoggedIn
         self.loginViewModel = LoginViewModel(loginRepository: loginRepository)
+        self.networkManager = networkManager
+        
+        // Revoke access token in keychain
+        networkManager.interceptor.storeAccessToken(nil)
     }
     
     var body: some View {
@@ -38,8 +45,9 @@ struct LoginView: View {
             
             Button("Login") {
                 if loginViewModel.validateEmail() {
-                    loginViewModel.login { success in
+                    loginViewModel.login { success, userData in
                         if success {
+                            networkManager.interceptor.storeAccessToken(userData?.jwt)
                             isLoggedIn = true
                         } else {
                             showingAlert = true
@@ -95,6 +103,7 @@ struct PasswordField: View {
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         let loginRepository = LoginRepository()
-        return LoginView(isLoggedIn: .constant(false), loginRepository: loginRepository)
+        let networkManager = NetworkManager()
+        return LoginView(isLoggedIn: .constant(false), loginRepository: loginRepository, networkManager: networkManager)
     }
 }

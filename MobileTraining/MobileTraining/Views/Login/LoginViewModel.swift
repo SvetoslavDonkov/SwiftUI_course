@@ -20,14 +20,14 @@ class LoginViewModel: ObservableObject {
         self.loginRepository = loginRepository
     }
     
-    func login(success: @escaping (Bool) -> Void) {
+    func login(success: @escaping (Bool, Login?) -> Void) {
         Task {
             do {
                 self.login = try await loginRepository.fetchLogin(identifier: self.email, password: self.password)
-                success(true)
+                success(true, login)
             } catch {
                 print("Login Error: \(error)")
-                success(false)
+                success(false, nil)
             }
         }
     }

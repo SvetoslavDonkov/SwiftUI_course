@@ -22,7 +22,6 @@ class ProductViewModel: ObservableObject {
         Task {
             do {
                 self.product = try await productRepository.fetchProduct(id: self.id)
-                print(self.product)
                 success(true)
             } catch {
                 print("Fetching Product Error: \(error)")
