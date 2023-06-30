@@ -6,12 +6,12 @@
 //
 
 import Foundation
+import Factory
 
 class ProductRepository: ProductProtocol {
-    private let networkManager = NetworkManager()
+    private let networkManager = Container.shared.networkManager()
     
     func fetchProduct(id: Int) async throws -> Product {
-        let url = "https://ethereal-artefacts.fly.dev/api/products/\(id)?populate=*"
-        return try await networkManager.request(url, method: .get)
+        return try await networkManager.request(AppURL.productsUrl(id), method: .get)
     }
 }

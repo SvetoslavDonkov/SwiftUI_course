@@ -8,9 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		1D4AE8372A4AEF9800348399 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 1D4AE8362A4AEF9800348399 /* KeychainAccess */; };
+		1D4AE83A2A4D843100348399 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4AE8392A4D843100348399 /* Constants.swift */; };
+		1D4AE83C2A4EB00800348399 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4AE83B2A4EB00800348399 /* StringExtensions.swift */; };
+		1D4AE8412A4EED0800348399 /* KeychainStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4AE8402A4EED0800348399 /* KeychainStorage.swift */; };
 		1D8FAD772A111213006D635E /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8FAD762A111213006D635E /* LoginView.swift */; };
 		1D8FAD792A11122F006D635E /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8FAD782A11122F006D635E /* LoginViewModel.swift */; };
-		1D8FAD7C2A1112EB006D635E /* NavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8FAD7B2A1112EB006D635E /* NavigationView.swift */; };
 		1D8FAD7F2A1113D5006D635E /* ProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8FAD7E2A1113D5006D635E /* ProductView.swift */; };
 		1D8FAD822A1376D4006D635E /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8FAD812A1376D4006D635E /* NetworkManager.swift */; };
 		1D8FAD842A1376F8006D635E /* LoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8FAD832A1376F8006D635E /* LoginRepository.swift */; };
@@ -30,9 +32,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1D4AE8392A4D843100348399 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		1D4AE83B2A4EB00800348399 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
+		1D4AE8402A4EED0800348399 /* KeychainStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStorage.swift; sourceTree = "<group>"; };
 		1D8FAD762A111213006D635E /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		1D8FAD782A11122F006D635E /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
-		1D8FAD7B2A1112EB006D635E /* NavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationView.swift; sourceTree = "<group>"; };
 		1D8FAD7E2A1113D5006D635E /* ProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductView.swift; sourceTree = "<group>"; };
 		1D8FAD812A1376D4006D635E /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		1D8FAD832A1376F8006D635E /* LoginRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRepository.swift; sourceTree = "<group>"; };
@@ -64,11 +68,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D4AE8382A4D841900348399 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				1D4AE8392A4D843100348399 /* Constants.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		1D4AE83F2A4EECF400348399 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				1D4AE8402A4EED0800348399 /* KeychainStorage.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		1D8FAD742A1111D0006D635E /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				1D8FAD7D2A1113C1006D635E /* Product */,
-				1D8FAD7A2A1112CE006D635E /* Navigation */,
 				1D8FAD752A1111DF006D635E /* Login */,
 			);
 			path = Views;
@@ -81,14 +100,6 @@
 				1D8FAD782A11122F006D635E /* LoginViewModel.swift */,
 			);
 			path = Login;
-			sourceTree = "<group>";
-		};
-		1D8FAD7A2A1112CE006D635E /* Navigation */ = {
-			isa = PBXGroup;
-			children = (
-				1D8FAD7B2A1112EB006D635E /* NavigationView.swift */,
-			);
-			path = Navigation;
 			sourceTree = "<group>";
 		};
 		1D8FAD7D2A1113C1006D635E /* Product */ = {
@@ -132,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				1D8FAD952A1E4453006D635E /* FactoryExtensions.swift */,
+				1D4AE83B2A4EB00800348399 /* StringExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -155,6 +167,8 @@
 		1DBF3F7E2A09406A007FB831 /* MobileTraining */ = {
 			isa = PBXGroup;
 			children = (
+				1D4AE83F2A4EECF400348399 /* Services */,
+				1D4AE8382A4D841900348399 /* Utils */,
 				1D8FAD942A1E443C006D635E /* Extensions */,
 				1D8FAD8B2A1E3166006D635E /* Models */,
 				1D8FAD802A137648006D635E /* Networking */,
@@ -258,17 +272,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				1DBE112B2A23A5AC00AE4A23 /* ProductViewModel.swift in Sources */,
+				1D4AE8412A4EED0800348399 /* KeychainStorage.swift in Sources */,
 				1DBE11292A23A35F00AE4A23 /* ProductRepository.swift in Sources */,
 				1D8FAD792A11122F006D635E /* LoginViewModel.swift in Sources */,
 				1D8FAD8F2A1E319A006D635E /* Login.swift in Sources */,
 				1D8FAD772A111213006D635E /* LoginView.swift in Sources */,
-				1D8FAD7C2A1112EB006D635E /* NavigationView.swift in Sources */,
+				1D4AE83A2A4D843100348399 /* Constants.swift in Sources */,
 				1D8FAD822A1376D4006D635E /* NetworkManager.swift in Sources */,
 				1DBF3F822A09406A007FB831 /* ContentView.swift in Sources */,
 				1D8FAD842A1376F8006D635E /* LoginRepository.swift in Sources */,
 				1D8FAD7F2A1113D5006D635E /* ProductView.swift in Sources */,
 				1D8FAD8D2A1E3187006D635E /* Product.swift in Sources */,
 				1DBF3F802A09406A007FB831 /* MobileTrainingApp.swift in Sources */,
+				1D4AE83C2A4EB00800348399 /* StringExtensions.swift in Sources */,
 				1D8FAD962A1E4453006D635E /* FactoryExtensions.swift in Sources */,
 				1D8FAD862A137711006D635E /* RepositoryProtocol.swift in Sources */,
 			);

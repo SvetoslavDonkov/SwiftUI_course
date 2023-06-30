@@ -6,69 +6,58 @@
 //
 
 import SwiftUI
+import Factory
 
 struct LoginView: View {
-    @Binding var isLoggedIn: Bool
-    @ObservedObject var loginViewModel: LoginViewModel
-    @State private var showingAlert = false
+    @StateObject var viewModel = LoginViewModel()
     @State private var isSecure = true
-    
-    private let networkManager: NetworkManager
-    
-    init(isLoggedIn: Binding<Bool>, loginRepository: LoginRepository,
-         networkManager: NetworkManager) {
-        self._isLoggedIn = isLoggedIn
-        self.loginViewModel = LoginViewModel(loginRepository: loginRepository)
-        self.networkManager = networkManager
-        
-        // Revoke access token in keychain
-        networkManager.interceptor.storeAccessToken(nil)
-    }
+    @State private var path = NavigationPath()
     
     var body: some View {
-        VStack {
-            TextField("Email", text: $loginViewModel.email)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .textInputAutocapitalization(.never)
-                .padding(.horizontal)
-            
-            if !loginViewModel.isEmailValid {
-                HStack {
-                    Text("Ivalid email")
-                        .foregroundColor(.red)
-                    Spacer()
+        NavigationStack(path: $path) {
+            VStack {
+                TextField("Email", text: $viewModel.email)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .textInputAutocapitalization(.never)
+                    .padding(.horizontal)
+                
+                if !viewModel.isEmailValid {
+                    HStack {
+                        Text("Ivalid email")
+                            .foregroundColor(.red)
+                        Spacer()
+                    }
+                    .padding(.horizontal)
                 }
-                .padding(.horizontal)
-            }
-            
-            PasswordField(password: $loginViewModel.password, isSecure: $isSecure)
-            
-            Button("Login") {
-                if loginViewModel.validateEmail() {
-                    loginViewModel.login { success, userData in
-                        if success {
-                            networkManager.interceptor.storeAccessToken(userData?.jwt)
-                            isLoggedIn = true
-                        } else {
-                            showingAlert = true
+                
+                PasswordField(password: $viewModel.password, isSecure: $isSecure)
+                
+                Button("Login") {
+                    viewModel.login {
+                        if $0 {
+                            path.append(Path.product)
                         }
-                        loginViewModel.password = ""
                     }
                 }
+                .disabled(viewModel.isLoginRequestRunning)
+                .padding()
             }
-            .disabled(loginViewModel.isLoginRequestRunning)
-            .padding()
+            .navigationDestination(for: String.self) {
+                if $0 == Path.product {
+                    ProductView()
+                }
+            }
+            .alert(isPresented: $viewModel.showingAlert) {
+                Alert(title: Text("Login Failed"), message: Text("Your email or password is incorrect. Please try again."), dismissButton: .default(Text("OK")))
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(
+                Image("LoginBackground")
+                    .resizable()
+                    .scaledToFill()
+                    .edgesIgnoringSafeArea(.all)
+            )
         }
-        .alert(isPresented: $showingAlert) {
-            Alert(title: Text("Login Failed"), message: Text("Your email or password is incorrect. Please try again."), dismissButton: .default(Text("OK")))
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(
-            Image("LoginBackground")
-                .resizable()
-                .scaledToFill()
-                .edgesIgnoringSafeArea(.all)
-        )
     }
 }
 
@@ -98,13 +87,5 @@ struct PasswordField: View {
             }
             .padding(.trailing)
         }
-    }
-}
-
-struct LoginView_Previews: PreviewProvider {
-    static var previews: some View {
-        let loginRepository = LoginRepository()
-        let networkManager = NetworkManager()
-        return LoginView(isLoggedIn: .constant(false), loginRepository: loginRepository, networkManager: networkManager)
     }
 }

@@ -6,16 +6,16 @@
 //
 
 import Foundation
+import Factory
 
 class LoginRepository: LoginProtocol {
-    private let networkManager = NetworkManager()
+    private let networkManager = Container.shared.networkManager()
     
-    func fetchLogin(identifier: String, password: String) async throws -> Login {
-        let url = "https://ethereal-artefacts.fly.dev/api/auth/local"
-        let parameters: [String: String] = [
+    func fetchLogin(identifier: String, password: String) async throws -> LoginData {
+        let parameters = [
             "identifier": identifier,
             "password": password
         ]
-        return try await networkManager.request(url, method: .post, parameters: parameters)
+        return try await networkManager.request(AppURL.loginUrl, method: .post, parameters: parameters)
     }
 }

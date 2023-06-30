@@ -7,7 +7,7 @@
 
 import Foundation
 import Alamofire
-import KeychainAccess
+import Factory
 
 class NetworkManager {
     private let session: Session
@@ -39,11 +39,10 @@ class NetworkManager {
 }
 
 struct Interceptor: RequestInterceptor {
-    private let keychain = Keychain(service: "com.accedia.svdo.MobileTraining.keychain")
-    private let accessTokenKey = "access_token"
+    private let keychainStorage = Container.shared.keychainStorage()
     
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
-        guard let accessToken = keychain[accessTokenKey] else {
+        guard let accessToken = keychainStorage.keychain[keychainStorage.accessTokenKey] else {
             return completion(.success(urlRequest))
         }
         
@@ -51,13 +50,5 @@ struct Interceptor: RequestInterceptor {
         urlRequest.headers.add(.authorization(bearerToken: accessToken))
         
         completion(.success(urlRequest))
-    }
-    
-    func storeAccessToken(_ accessToken: String?) {
-        if let accessToken = accessToken {
-            keychain[accessTokenKey] = accessToken
-        } else {
-            keychain[accessTokenKey] = nil
-        }
     }
 }

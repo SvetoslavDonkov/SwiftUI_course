@@ -10,15 +10,19 @@ import Factory
 
 extension Container {
     var networkManager: Factory<NetworkManager> {
-        self { NetworkManager() }
+        Factory(self) { NetworkManager() }
             .singleton
     }
     
     var loginRepository: Factory<LoginRepository> {
-        self { LoginRepository() }
+        Factory(self) { LoginRepository() }
     }
     
     var productRepository: Factory<ProductRepository> {
-        self { ProductRepository() }
+        Factory(self) { ProductRepository() }
+    }
+    
+    var keychainStorage: Factory<KeychainStorage> {
+        Factory(self) { KeychainStorage() }
     }
 }

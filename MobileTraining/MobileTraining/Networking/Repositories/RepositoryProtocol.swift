@@ -8,7 +8,7 @@
 import Foundation
 
 protocol LoginProtocol {
-    func fetchLogin(identifier: String, password: String) async throws -> Login
+    func fetchLogin(identifier: String, password: String) async throws -> LoginData
 }
 
 protocol ProductProtocol {

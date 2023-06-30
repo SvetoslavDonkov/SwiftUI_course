@@ -7,9 +7,14 @@
 
 import Foundation
 
-struct Login: Codable {
-    let jwt: String
-    let user: User
+struct LoginData: Codable {
+    let jwt: String?
+    let user: User?
+    
+    init(jwt: String? = nil, user: User? = nil) {
+        self.jwt = jwt
+        self.user = user
+    }
 }
 
 struct User: Codable, Identifiable {

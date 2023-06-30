@@ -6,26 +6,24 @@
 //
 
 import Foundation
+import Factory
 
 class ProductViewModel: ObservableObject {
-    private let productRepository: ProductRepository
+    private let productRepository = Container.shared.productRepository()
     
     @Published var id = 1
-    @Published var product: Product
+    @Published var product = Product()
+    @Published var loading = true
     
-    init(productRepository: ProductRepository) {
-        self.product = Product(id: 0, title: "", description: "", short_description: "", stock: 0, price: 0, rating: 0, image: "", category: "")
-        self.productRepository = productRepository
-    }
-    
-    func getProduct(success: @escaping (Bool) -> Void) {
+    func getProduct() {
         Task {
+            /// try await Task.sleep(nanoseconds: 10 * 1_000_000_000)
             do {
                 self.product = try await productRepository.fetchProduct(id: self.id)
-                success(true)
+                loading = false
             } catch {
                 print("Fetching Product Error: \(error)")
-                success(false)
+                
             }
         }
     }

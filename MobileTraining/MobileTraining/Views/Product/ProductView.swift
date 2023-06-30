@@ -7,53 +7,50 @@
 
 import SwiftUI
 import URLImage
+import Factory
 
 struct ProductView: View {
-    @State private var productViewModel: ProductViewModel?
-    let productRepository: ProductRepository
-    
-    init(productRepository: ProductRepository) {
-        self.productRepository = productRepository
-    }
+    @StateObject var viewModel = ProductViewModel()
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            if let productViewModel = productViewModel {
-//                URLImage(URL(string: productViewModel.product.image)!) {
-//                    EmptyView()
-//                } inProgress: { progress in
-//                    Text("Loading...")
-//                        .padding()
-//                        .frame(maxWidth: .infinity, alignment: .center)
-//                        .frame(maxHeight: .infinity)
-//                        .font(.system(size: 30))
-//                } failure: { error, retry in
-//                    Image(systemName: "photo")
-//                        .resizable()
-//                        .aspectRatio(contentMode: .fit)
-//                } content: { image in
-//                    image
-//                        .resizable()
-//                        .aspectRatio(contentMode: .fit)
-//                        .cornerRadius(15)
-//                }
+            
+            if !viewModel.loading {
+                URLImage(URL(string: viewModel.product.image!)!) {
+                    EmptyView()
+                } inProgress: { progress in
+                    Text("Loading...")
+                        .padding()
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .frame(maxHeight: .infinity)
+                        .font(.system(size: 30))
+                } failure: { error, retry in
+                    Image(systemName: "photo")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                } content: { image in
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .cornerRadius(15)
+                }
                 
-                Text(productViewModel.product.title)
+                Text(viewModel.product.title!)
                     .font(.title)
                     .fontWeight(.bold)
                 
-                Text(productViewModel.product.short_description)
+                Text(viewModel.product.shortDescription!)
                     .font(.body)
                     .foregroundColor(.secondary)
                 
-                Text(productViewModel.product.description)
+                Text(viewModel.product.description!)
                     .font(.body)
                     .foregroundColor(.primary)
                     .lineLimit(6)
                     .multilineTextAlignment(.leading)
                 
                 HStack {
-                    Text("$\(productViewModel.product.price, specifier: "%.2f")")
+                    Text("$\(viewModel.product.price!, specifier: "%.2f")")
                         .font(.title)
                         .fontWeight(.bold)
                     Spacer()
@@ -67,12 +64,15 @@ struct ProductView: View {
                 .background(Color("Button_color"))
                 .foregroundColor(.white)
                 .cornerRadius(25)
-            } else {
+            }
+            
+            else {
                 Text("Loading...")
+                    .fontWeight(.semibold)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
         .padding()
-        .navigationBarTitle(Text("Product details"), displayMode: .inline)
         .background(
             Image("Background")
                 .resizable()
@@ -80,21 +80,15 @@ struct ProductView: View {
                 .edgesIgnoringSafeArea(.all)
         )
         .onAppear {
-            productViewModel = ProductViewModel(productRepository: productRepository)
-            productViewModel?.getProduct { success in
-                if success {
-                    // Handle success
-                } else {
-                    // Handle failure
-                }
-            }
+            viewModel.getProduct()
         }
+        .navigationBarTitle(Text("Product details"), displayMode: .inline)
+        .navigationBarBackButtonHidden(true)
     }
 }
 
 struct ProductView_Previews: PreviewProvider {
     static var previews: some View {
-        let productRepository = ProductRepository()
-        return ProductView(productRepository: productRepository)
+        ProductView()
     }
 }
