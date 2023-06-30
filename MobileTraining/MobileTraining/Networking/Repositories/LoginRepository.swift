@@ -12,10 +12,12 @@ class LoginRepository: LoginProtocol {
     private let networkManager = Container.shared.networkManager()
     
     func fetchLogin(identifier: String, password: String) async throws -> LoginData {
+        let url = "\(AppURL.baseUrl)\(AppURL.loginRoute)"
         let parameters = [
             "identifier": identifier,
             "password": password
         ]
-        return try await networkManager.request(AppURL.loginUrl, method: .post, parameters: parameters)
+        
+        return try await networkManager.request(url, method: .post, parameters: parameters)
     }
 }

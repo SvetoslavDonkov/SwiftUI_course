@@ -12,10 +12,9 @@ struct Path {
 }
 
 struct AppURL {
-    static let loginUrl = "https://ethereal-artefacts.fly.dev/api/auth/local"
-    static let productsUrl: (Int) -> String = {
-        return "https://ethereal-artefacts.fly.dev/api/products/\($0)?populate=*"
-    }
+    static let baseUrl = "https://ethereal-artefacts.fly.dev/api/"
+    static let loginRoute = "auth/local"
+    static let productsRoute = "products"
 }
 
 struct StringConstants {

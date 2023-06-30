@@ -82,7 +82,7 @@ struct ProductView: View {
         .onAppear {
             viewModel.getProduct()
         }
-        .navigationBarTitle(Text("Product details"), displayMode: .inline)
+        .navigationTitle("Product details")
         .navigationBarBackButtonHidden(true)
     }
 }

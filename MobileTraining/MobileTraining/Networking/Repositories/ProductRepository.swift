@@ -12,6 +12,9 @@ class ProductRepository: ProductProtocol {
     private let networkManager = Container.shared.networkManager()
     
     func fetchProduct(id: Int) async throws -> Product {
-        return try await networkManager.request(AppURL.productsUrl(id), method: .get)
+        let url = "\(AppURL.baseUrl)\(AppURL.productsRoute)/\(id)"
+        let parameters = ["populate": "*"]
+        
+        return try await networkManager.request(url, method: .get, parameters: parameters)
     }
 }
