@@ -6,15 +6,10 @@
 //
 
 import SwiftUI
+import Factory
 
 struct ContentView: View {
     var body: some View {
-        AppNavigationView()
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+        LoginView()
     }
 }

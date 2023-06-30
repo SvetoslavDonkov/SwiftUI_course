@@ -6,16 +6,17 @@
 //
 
 import SwiftUI
+import Factory
 
 struct AppNavigationView: View {
-    @State private var isLoggedIn = false;
+    let productRepository = Container().productRepository()
     
     var body: some View {
         NavigationView {
             if isLoggedIn {
-                ProductView(product: sampleProduct)
+                ProductView(productRepository: productRepository)
             } else {
-                LoginView(isLoggedIn: $isLoggedIn)
+                LoginView(isLoggedIn: $isLoggedIn, loginRepository: loginRepository, networkManager: networkManager)
             }
         }
     }
